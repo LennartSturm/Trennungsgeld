@@ -182,6 +182,23 @@ def test_commuting_actual_costs_take_precedence():
     assert components["commuting"] == 5 * 12.5
 
 
+def test_commuting_and_home_trip_negative_values_rejected():
+    calculator = TrennungsgeldCalculator()
+
+    with pytest.raises(ValueError, match="home trips must be non-negative"):
+        calculator.calculate_travel_costs(
+            TravelCostInput(weekly_home_trips=-1, home_trip_distance_km=10)
+        )
+
+    with pytest.raises(ValueError, match="commuting days must be non-negative"):
+        calculator.calculate_travel_costs(
+            TravelCostInput(
+                commuting_days=-2,
+                commuting_actual_cost_per_day=5.0,
+            )
+        )
+
+
 def test_format_breakdown_outputs_sorted_keys():
     calculator = TrennungsgeldCalculator()
     result = calculator.calculate(
