@@ -10,7 +10,7 @@ from .calculator import (
     format_breakdown,
 )
 from .gui import launch_gui
-from .simple_cli import run_simple_cli
+
 
 __all__ = [
     "AllowanceInput",
@@ -21,5 +21,4 @@ __all__ = [
     "TravelRates",
     "format_breakdown",
     "launch_gui",
-    "run_simple_cli",
-]
+

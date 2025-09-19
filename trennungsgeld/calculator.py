@@ -165,8 +165,6 @@ class TrennungsgeldCalculator:
             data.return_trip_distance_km, data.return_trip_actual_cost
         )
 
-        if data.weekly_home_trips < 0:
-            raise ValueError("Number of home trips must be non-negative")
 
         home_trip_amount = km_or_cost(
             data.home_trip_distance_km, data.home_trip_actual_cost
@@ -174,16 +172,13 @@ class TrennungsgeldCalculator:
         components["home_trips"] = home_trip_amount
 
         commuting_amount = 0.0
-        if data.commuting_days < 0:
-            raise ValueError("Number of commuting days must be non-negative")
 
         if data.commuting_actual_cost_per_day is not None:
             if data.commuting_actual_cost_per_day < 0:
                 raise ValueError("Commuting cost per day must be non-negative")
             commuting_amount = data.commuting_actual_cost_per_day * data.commuting_days
         else:
-            if data.commuting_distance_km < 0:
-                raise ValueError("Commuting distance must be non-negative")
+
             commuting_amount = (
                 data.commuting_distance_km * data.commuting_days * rate
             )

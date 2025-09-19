@@ -18,7 +18,7 @@ classifiers = [
 [project.scripts]
 trennungsgeld = "trennungsgeld.cli:main"
 trennungsgeld-gui = "trennungsgeld.gui:launch_gui"
-trennungsgeld-einfach = "trennungsgeld.simple_cli:run_simple_cli"
+
 
 [tool.pytest.ini_options]
 addopts = "-q"

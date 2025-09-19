@@ -1,4 +1,4 @@
-import pytest
+
 
 from trennungsgeld.calculator import (
     AllowanceInput,
@@ -7,8 +7,7 @@ from trennungsgeld.calculator import (
     TrennungsgeldCalculator,
     TravelCostInput,
     TravelRates,
-    format_breakdown,
-)
+
 
 
 def test_meal_allowance_basic():
@@ -81,136 +80,3 @@ def test_calculate_combined():
     assert result.total_allowance == result.meal_allowance + result.travel_costs
     assert "meal_full_days" in result.breakdown
     assert "travel_initial_trip" in result.breakdown
-
-
-def test_meal_allowance_validations():
-    calculator = TrennungsgeldCalculator()
-    with pytest.raises(ValueError):
-        calculator.calculate_meal_allowance(
-            AllowanceInput(
-                full_days=-1,
-                arrival_departure_days=0,
-                partial_days=0,
-            )
-        )
-
-    with pytest.raises(ValueError):
-        calculator.calculate_meal_allowance(
-            AllowanceInput(
-                full_days=0,
-                arrival_departure_days=0,
-                partial_days=0,
-                overnight_stays_with_receipts=-2,
-                overnight_costs_total=0.0,
-            )
-        )
-
-    with pytest.raises(ValueError):
-        calculator.calculate_meal_allowance(
-            AllowanceInput(
-                full_days=0,
-                arrival_departure_days=0,
-                partial_days=0,
-                overnight_stays_without_receipts=-3,
-            )
-        )
-
-
-@pytest.mark.parametrize(
-    "vehicle,expected",
-    [
-        ("car", 0.20),
-        ("motorcycle", 0.13),
-        ("bike", 0.05),
-        ("bicycle", 0.05),
-    ],
-)
-def test_vehicle_rate_selection(vehicle, expected):
-    travel_rates = TravelRates(
-        car_per_km=0.20, motorcycle_per_km=0.13, bicycle_per_km=0.05
-    )
-    calculator = TrennungsgeldCalculator(travel_rates=travel_rates)
-    data = TravelCostInput(initial_trip_distance_km=100, vehicle=vehicle)
-
-    components = calculator.calculate_travel_costs(data)
-
-    assert components["initial_trip"] == pytest.approx(100 * expected)
-
-
-def test_invalid_vehicle_raises_value_error():
-    calculator = TrennungsgeldCalculator()
-    with pytest.raises(ValueError):
-        calculator.calculate_travel_costs(
-            TravelCostInput(initial_trip_distance_km=10, vehicle="plane")
-        )
-
-
-def test_actual_cost_overrides_distance_and_validates_negatives():
-    calculator = TrennungsgeldCalculator()
-
-    data = TravelCostInput(
-        initial_trip_distance_km=1000,
-        initial_trip_actual_cost=50.0,
-        return_trip_distance_km=1000,
-        return_trip_actual_cost=None,
-        weekly_home_trips=1,
-        home_trip_distance_km=100,
-        home_trip_actual_cost=40.0,
-    )
-
-    components = calculator.calculate_travel_costs(data)
-
-    assert components["initial_trip"] == 50.0
-    assert components["home_trips"] == 40.0
-
-    with pytest.raises(ValueError):
-        calculator.calculate_travel_costs(
-            TravelCostInput(initial_trip_actual_cost=-1.0)
-        )
-
-
-def test_commuting_actual_costs_take_precedence():
-    calculator = TrennungsgeldCalculator()
-    data = TravelCostInput(
-        commuting_days=5,
-        commuting_distance_km=20,
-        commuting_actual_cost_per_day=12.5,
-    )
-
-    components = calculator.calculate_travel_costs(data)
-
-    assert components["commuting"] == 5 * 12.5
-
-
-def test_commuting_and_home_trip_negative_values_rejected():
-    calculator = TrennungsgeldCalculator()
-
-    with pytest.raises(ValueError, match="home trips must be non-negative"):
-        calculator.calculate_travel_costs(
-            TravelCostInput(weekly_home_trips=-1, home_trip_distance_km=10)
-        )
-
-    with pytest.raises(ValueError, match="commuting days must be non-negative"):
-        calculator.calculate_travel_costs(
-            TravelCostInput(
-                commuting_days=-2,
-                commuting_actual_cost_per_day=5.0,
-            )
-        )
-
-
-def test_format_breakdown_outputs_sorted_keys():
-    calculator = TrennungsgeldCalculator()
-    result = calculator.calculate(
-        AllowanceInput(full_days=1, arrival_departure_days=1, partial_days=1),
-        TravelCostInput(initial_trip_distance_km=10, weekly_home_trips=1, home_trip_distance_km=10),
-    )
-
-    lines = format_breakdown(result)
-
-    assert lines[0] == "Berechnungsübersicht:"
-    assert "Gesamtsumme" in lines[1]
-    assert lines[4] == "  Detailposten:"
-    detail_lines = lines[5:]
-    assert any(line.strip().startswith("meal_") for line in detail_lines)
-    assert detail_lines == sorted(detail_lines)

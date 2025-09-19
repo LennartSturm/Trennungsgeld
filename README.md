@@ -55,21 +55,6 @@ pytest
 
 ## Nutzung
 
-### Schnelleinstieg über Fragenkatalog
-
-Für eine besonders einfache Nutzung steht ein geführter Fragenkatalog bereit.
-Er lässt sich entweder direkt mit Python oder über den Konsolenbefehl
-`trennungsgeld-einfach` starten:
-
-```bash
-python -m trennungsgeld
-```
-
-Das Programm fragt die wichtigsten Angaben nacheinander ab. Leere Eingaben
-übernehmen den Standardwert `0` (bzw. das Standardfahrzeug `car`). Im Anschluss
-wird sofort eine Zusammenfassung mit allen Teilbeträgen angezeigt.
-
-### Nutzung über Kommandozeilenparameter
 
 Nach der Installation steht der Befehl `trennungsgeld` zur Verfügung. Alternativ
 kann das Modul direkt mit Python ausgeführt werden:
