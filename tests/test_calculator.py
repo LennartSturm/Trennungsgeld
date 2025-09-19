@@ -1,3 +1,4 @@
+
 from trennungsgeld.calculator import (
     AllowanceInput,
     AllowanceRates,
