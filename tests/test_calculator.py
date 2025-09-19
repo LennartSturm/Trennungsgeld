@@ -1,4 +1,5 @@
 
+
 from trennungsgeld.calculator import (
     AllowanceInput,
     AllowanceRates,
@@ -6,7 +7,7 @@ from trennungsgeld.calculator import (
     TrennungsgeldCalculator,
     TravelCostInput,
     TravelRates,
-)
+
 
 
 def test_meal_allowance_basic():

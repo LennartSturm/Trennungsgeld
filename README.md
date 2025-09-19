@@ -55,6 +55,7 @@ pytest
 
 ## Nutzung
 
+
 Nach der Installation steht der Befehl `trennungsgeld` zur Verfügung. Alternativ
 kann das Modul direkt mit Python ausgeführt werden:
 

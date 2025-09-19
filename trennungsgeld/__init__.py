@@ -11,6 +11,7 @@ from .calculator import (
 )
 from .gui import launch_gui
 
+
 __all__ = [
     "AllowanceInput",
     "AllowanceRates",
@@ -20,4 +21,4 @@ __all__ = [
     "TravelRates",
     "format_breakdown",
     "launch_gui",
-]
+
