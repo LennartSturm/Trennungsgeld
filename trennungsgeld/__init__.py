@@ -9,6 +9,7 @@ from .calculator import (
     TravelRates,
     format_breakdown,
 )
+from .gui import launch_gui
 
 __all__ = [
     "AllowanceInput",
@@ -18,4 +19,5 @@ __all__ = [
     "TravelCostInput",
     "TravelRates",
     "format_breakdown",
+    "launch_gui",
 ]

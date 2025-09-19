@@ -15,6 +15,7 @@ Der Fokus liegt auf Transparenz und Nachvollziehbarkeit der Rechenschritte.
   Eingabe tatsächlicher Kosten
 * Optionales Einlesen der Eingabedaten aus einer JSON-Datei
 * Kommandozeilenwerkzeug `trennungsgeld`
+* Grafische Oberfläche für eine komfortable Datenerfassung
 
 ## Annahmen
 
@@ -65,6 +66,19 @@ python -m trennungsgeld.cli --full-days 5 --arrival-days 2 --partial-days 3 \
 ```
 
 Die Ausgabe enthält eine übersichtliche Aufschlüsselung aller Teilbeträge.
+
+### Grafische Oberfläche
+
+Eine Desktop-Oberfläche auf Basis von Tkinter kann mit folgendem Befehl gestartet
+werden:
+
+```bash
+python -m trennungsgeld.gui
+```
+
+Nach dem Start lassen sich alle Eingabeparameter bequem erfassen. Über den
+Button **Berechnen** wird die aktuelle Prognose inklusive Detailauflistung
+angezeigt.
 
 ### Eingabe über JSON
 
