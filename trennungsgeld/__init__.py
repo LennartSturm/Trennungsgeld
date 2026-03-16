@@ -21,4 +21,4 @@ __all__ = [
     "TravelRates",
     "format_breakdown",
     "launch_gui",
-
+]
