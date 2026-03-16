@@ -81,6 +81,23 @@ Nach dem Start lassen sich alle Eingabeparameter bequem erfassen. Über den
 Button **Berechnen** wird die aktuelle Prognose inklusive Detailauflistung
 angezeigt.
 
+
+### WLAN-Barwerte live mitschneiden
+
+Zusätzlich steht ein kleines Tool bereit, das live die Signalstärke von
+WLAN-Interfaces ausliest, in eine 0-4-Bars-Skala umrechnet und kontinuierlich
+in eine Datei schreibt:
+
+```bash
+wifi-bars --interval 1 --duration 30 --output wifi_signal_log.csv
+```
+
+Optional lassen sich gezielt Interfaces auswählen und das Ausgabeformat ändern:
+
+```bash
+wifi-bars --interface wlan0 --format jsonl --output wlan0.jsonl
+```
+
 ### Eingabe über JSON
 
 Eingaben können in einer JSON-Datei strukturiert werden. Beispiel `daten.json`:
