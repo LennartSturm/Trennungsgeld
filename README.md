@@ -5,6 +5,10 @@ der voraussichtliche Trennungsgeldanspruch auf Bundesebene nach
 Bundesreisekostengesetz (BRKG) inklusive Reisekosten überschlägig ermitteln lässt.
 Der Fokus liegt auf Transparenz und Nachvollziehbarkeit der Rechenschritte.
 
+Zusätzlich enthält das Repository jetzt einen **PCILeech FPGA Adapter**, mit dem
+ausgelesene PCIe-Daten direkt in Projektvorlagen übernommen werden können
+(inklusive grafischer Oberfläche).
+
 ## Funktionsumfang
 
 * Berechnung von Verpflegungsmehraufwand und Übernachtungskosten anhand der
@@ -16,6 +20,9 @@ Der Fokus liegt auf Transparenz und Nachvollziehbarkeit der Rechenschritte.
 * Optionales Einlesen der Eingabedaten aus einer JSON-Datei
 * Kommandozeilenwerkzeug `trennungsgeld`
 * Grafische Oberfläche für eine komfortable Datenerfassung
+* PCILeech-Adapter zum Erzeugen von FPGA-Defines aus ausgelesenen PCIe-Daten
+* Platzhalterbasiertes Patchen von FPGA-Projektvorlagen
+* PCILeech-Adapter mit eigener GUI
 
 ## Annahmen
 
@@ -112,6 +119,44 @@ Aufruf:
 ```bash
 python -m trennungsgeld.cli --input daten.json
 ```
+
+## PCILeech FPGA Adapter
+
+### Direktes Anpassen auf ausgelesene Daten (CLI)
+
+Aus einer PCILeech-/lspci-Ausgabe kann direkt ein Define-Block erzeugt werden:
+
+```bash
+pcileech-adapter --input dump.txt
+```
+
+Oder eine FPGA-Vorlage mit Platzhaltern patchen:
+
+```bash
+pcileech-adapter --input dump.txt --template fpga_template.v --output fpga_config.vh
+```
+
+Unterstützte Platzhalter:
+
+* `{{VENDOR_ID}}`
+* `{{DEVICE_ID}}`
+* `{{SUBSYSTEM_VENDOR_ID}}`
+* `{{SUBSYSTEM_ID}}`
+* `{{REVISION_ID}}`
+* `{{CLASS_CODE}}`
+* `{{DEFINE_BLOCK}}`
+
+### PCILeech GUI
+
+Die GUI zur Anpassung kann mit folgendem Befehl gestartet werden:
+
+```bash
+pcileech-adapter-gui
+```
+
+Dort können Rohdaten und optional eine Vorlage geladen werden. Mit
+**Anpassen** wird das Ergebnis sofort erstellt und kann anschließend gespeichert
+werden.
 
 ## Lizenz
 

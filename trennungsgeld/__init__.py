@@ -4,13 +4,12 @@ from .calculator import (
     AllowanceInput,
     AllowanceRates,
     CalculationResult,
-    TrennungsgeldCalculator,
     TravelCostInput,
     TravelRates,
+    TrennungsgeldCalculator,
     format_breakdown,
 )
 from .gui import launch_gui
-
 
 __all__ = [
     "AllowanceInput",
@@ -21,4 +20,4 @@ __all__ = [
     "TravelRates",
     "format_breakdown",
     "launch_gui",
-
+]

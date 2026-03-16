@@ -18,6 +18,8 @@ classifiers = [
 [project.scripts]
 trennungsgeld = "trennungsgeld.cli:main"
 trennungsgeld-gui = "trennungsgeld.gui:launch_gui"
+pcileech-adapter = "trennungsgeld.pcileech_cli:main"
+pcileech-adapter-gui = "trennungsgeld.pcileech_gui:launch_gui"
 
 
 [tool.pytest.ini_options]
